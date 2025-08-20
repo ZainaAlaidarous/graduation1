@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>تأكيد حضور الحفل</title>
   <style>
-    /* ===== الخلفية ===== */
     body {
       font-family: 'Tajawal', Arial, sans-serif;
       display: flex;
@@ -12,27 +11,17 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-image: url('./images/background.jpg'); /* ضع صورتك هنا */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: #4a2c2a;
+      background: #fff5f7; /* وردي فاتح */
+      color: #4a2c2a; /* بني داكن */
     }
 
-    /* طبقة تغطية شفافة لتسهيل قراءة النصوص */
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.6);
-      z-index: 0;
+    h2 {
+      font-size: 36px; /* أكبر */
+      margin-bottom: 30px;
+      color: #7b3f61; /* موڤ غامق */
     }
 
-    /* ===== محتوى البطاقة ===== */
     .card {
-      position: relative;
-      z-index: 1; /* فوق طبقة التغطية */
       padding: 40px;
       border-radius: 20px;
       max-width: 600px;
@@ -42,23 +31,17 @@
       text-align: center;
     }
 
-    h2 {
-      font-size: 36px;
-      margin-bottom: 30px;
-      color: #7b3f61;
-    }
-
     input, button {
       padding: 16px;
       margin: 12px;
-      font-size: 20px;
+      font-size: 20px; /* تكبير الخط */
       border-radius: 10px;
       border: 1px solid #ddd;
     }
 
     #submitBtn {
       display: none;
-      background: #d77a8b;
+      background: #d77a8b; /* وردي موڤ */
       color: #fff;
       border: none;
       border-radius: 10px;
@@ -67,7 +50,9 @@
       font-size: 20px;
     }
 
-    #submitBtn:hover { background: #c05f72; }
+    #submitBtn:hover {
+      background: #c05f72;
+    }
 
     .member {
       display: flex;
@@ -82,13 +67,39 @@
       font-size: 18px;
     }
 
-    .name { font-weight: 600; font-size: 20px; }
-    .status { min-width: 130px; text-align: center; font-size: 18px; }
+    .name {
+      font-weight: 600;
+      font-size: 20px; /* تكبير اسم الشخص */
+    }
 
-    /* ===== CSS Switch ===== */
-    .switch { position: relative; width: 80px; height: 38px; flex-shrink: 0; }
-    .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
-    .slider { position: absolute; inset: 0; background: #f2d4dc; border-radius: 999px; transition: .25s ease; }
+    .status {
+      min-width: 130px;
+      text-align: center;
+      font-size: 18px; /* تكبير حالة الحضور */
+    }
+
+    .switch {
+      position: relative;
+      width: 80px;
+      height: 38px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #f2d4dc;
+      border-radius: 999px;
+      transition: .25s ease;
+    }
+
     .slider:before {
       content: "";
       position: absolute;
@@ -100,8 +111,15 @@
       border-radius: 50%;
       transition: .25s ease;
     }
-    input:checked + .slider { background: #fce7f3; }
-    input:checked + .slider:before { transform: translateX(42px); background: #e7b859; }
+
+    input:checked + .slider {
+      background: #fce7f3;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(42px);
+      background: #e7b859;
+    }
 
     .switch .off, .switch .on {
       position: absolute;
@@ -111,6 +129,7 @@
       font-weight: 700;
       pointer-events: none;
     }
+
     .switch .off { left: 8px; color: #9ca3af; }
     .switch .on { right: 8px; color: #d77a8b; opacity: 0; transition: .2s; }
     input:checked ~ .on { opacity: 1; }
