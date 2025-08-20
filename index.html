@@ -6,31 +6,35 @@
   <style>
     body {
       font-family: 'Tajawal', Arial, sans-serif;
-      text-align: center;
-      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
       background: #fff5f7; /* وردي فاتح */
       color: #4a2c2a; /* بني داكن */
     }
 
     h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
+      font-size: 36px; /* أكبر */
+      margin-bottom: 30px;
       color: #7b3f61; /* موڤ غامق */
     }
 
     .card {
-      margin: 20px auto;
-      padding: 30px;
+      padding: 40px;
       border-radius: 20px;
       max-width: 600px;
+      width: 100%;
       background: #ffffff;
       box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      text-align: center;
     }
 
     input, button {
-      padding: 14px;
-      margin: 10px;
-      font-size: 18px;
+      padding: 16px;
+      margin: 12px;
+      font-size: 20px; /* تكبير الخط */
       border-radius: 10px;
       border: 1px solid #ddd;
     }
@@ -43,6 +47,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
+      font-size: 20px;
     }
 
     #submitBtn:hover {
@@ -55,36 +60,38 @@
       justify-content: space-between;
       gap: 12px;
       margin: 14px 0;
-      padding: 14px;
+      padding: 16px;
       border-radius: 14px;
-      background: #fff0f5; /* خلفية وردية فاتحة */
+      background: #fff0f5;
       border: 1px solid #f3dce3;
+      font-size: 18px;
     }
 
     .name {
       font-weight: 600;
-      font-size: 18px;
+      font-size: 20px; /* تكبير اسم الشخص */
     }
 
     .status {
       min-width: 130px;
       text-align: center;
-      font-size: 16px;
+      font-size: 18px; /* تكبير حالة الحضور */
     }
 
-    /* ===== CSS Switch (ستايل وردي/ذهبي) ===== */
     .switch {
       position: relative;
       width: 80px;
       height: 38px;
       flex-shrink: 0;
     }
+
     .switch input {
       opacity: 0;
       width: 0;
       height: 0;
       position: absolute;
     }
+
     .slider {
       position: absolute;
       inset: 0;
@@ -92,6 +99,7 @@
       border-radius: 999px;
       transition: .25s ease;
     }
+
     .slider:before {
       content: "";
       position: absolute;
@@ -103,21 +111,25 @@
       border-radius: 50%;
       transition: .25s ease;
     }
+
     input:checked + .slider {
       background: #fce7f3;
     }
+
     input:checked + .slider:before {
       transform: translateX(42px);
-      background: #e7b859; /* ذهبي */
+      background: #e7b859;
     }
+
     .switch .off, .switch .on {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       pointer-events: none;
     }
+
     .switch .off { left: 8px; color: #9ca3af; }
     .switch .on { right: 8px; color: #d77a8b; opacity: 0; transition: .2s; }
     input:checked ~ .on { opacity: 1; }
@@ -125,21 +137,18 @@
   </style>
 </head>
 <body>
-  <h2>🎉 تأكيد حضور الحفل</h2>
-
   <div class="card">
+    <h2>🎉 تأكيد حضور الحفل</h2>
     <label>اكتب اسمك:</label><br>
     <input id="nameInput" type="text" placeholder="مثال: الأم" />
     <button onclick="checkGuest()">متابعة</button>
 
     <div id="guestList"></div>
-
     <button id="submitBtn" onclick="submitResponse()">إرسال</button>
-    <div id="result" style="margin-top:14px"></div>
+    <div id="result" style="margin-top:14px;font-size:18px;"></div>
   </div>
 
   <script>
-    // بيانات المجموعات
     const groups = {
       "الأم": ["الأم","محمد","سارة"],
       "الأب": ["الأب","أحمد"]
@@ -160,7 +169,6 @@
       responses = {};
       currentMembers = [];
 
-      // تحقق هل هذا الاسم سبق وشارك
       if(localStorage.getItem("submitted_"+key)){
         box.innerHTML = `<p>⚠️ عذرًا <b>${key}</b>، لقد سجلت ردك مسبقًا ولا يمكن التعديل.</p>`;
         return;
@@ -176,7 +184,6 @@
 
       currentMembers.forEach(person=>{
         responses[person] = null; 
-
         const row = document.createElement('div');
         row.className = 'member';
 
@@ -241,10 +248,8 @@
       html += "<br>🎉 شكرًا تم تسجيل ردكم!";
       result.innerHTML = html;
 
-      // حفظ إنه أرسل مرة واحدة فقط
       localStorage.setItem("submitted_"+key, "true");
 
-      // إرسال البيانات إلى Formspree
       fetch("https://formspree.io/f/xdkdrgjo", { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -253,14 +258,7 @@
           الحاضرون: attending.join("، "),
           الغائبون: notAttending.join("، ")
         })
-      })
-      .then(r => {
-        if(r.ok){
-          console.log("✅ تم إرسال الرد إلى Formspree");
-        } else {
-          console.error("❌ خطأ أثناء الإرسال");
-        }
-      });
+      }).then(r => r.ok ? console.log("✅ تم الإرسال") : console.error("❌ خطأ"));
     }
   </script>
 </body>
