@@ -138,9 +138,9 @@
 </head>
 <body>
   <div class="card">
-    <h2>🎉 تأكيد حضور الحفل</h2>
-    <label>اكتب اسمك:</label><br>
-    <input id="nameInput" type="text" placeholder="مثال: الأم" />
+    <h2> تأكيد حضور الحفل</h2>
+    <label>ادخل اسمك:</label><br>
+    <input id="nameInput" type="text" placeholder="مثال: زينه العيدروس" />
     <button onclick="checkGuest()">متابعة</button>
 
     <div id="guestList"></div>
@@ -150,7 +150,7 @@
 
   <script>
     const groups = {
-      "الأم": ["الأم","محمد","سارة"],
+      "زينه العيدروس": ["زينه","الزين","حلا"],
       "الأب": ["الأب","أحمد"]
     };
 
@@ -242,10 +242,11 @@
         (val ? attending : notAttending).push(person);
       }
 
-      let html = "<h3>📋 نتائج التأكيد</h3>";
       html += attending.length ? `✅ <b>الحاضرون:</b> ${attending.join("، ")}<br>` : "";
       html += notAttending.length ? `❌ <b>غير الحاضرين:</b> ${notAttending.join("، ")}<br>` : "";
-      html += "<br>🎉 شكرًا تم تسجيل ردكم!";
+      html += "<br> شكرًا تم تسجيل ردكم!";
+      html += "<br>بحضوركـم تتم فرحتنــــا";
+
       result.innerHTML = html;
 
       localStorage.setItem("submitted_"+key, "true");
@@ -263,3 +264,4 @@
   </script>
 </body>
 </html>
+
